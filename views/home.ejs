@@ -1,135 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL Shortener</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 40px 20px;
+        background-color: #f4f4f4;
+        color: #333;
+      }
 
-        .container {
-            max-width: 700px;
-            margin: auto;
-            background: #fff;
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
+      .container {
+        max-width: 700px;
+        margin: auto;
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
 
-        h1 {
-            text-align: center;
-            color: #222;
-        }
+      h1 {
+        text-align: center;
+        color: #222;
+      }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
 
-        input[type="url"] {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+      input[type="url"] {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+      }
 
-        button {
-            padding: 12px;
-            background-color: #007BFF;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+      button {
+        padding: 12px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+      button:hover {
+        background-color: #0056b3;
+      }
 
-        .result {
-            font-weight: bold;
-            margin-top: 10px;
-            text-align: center;
-            color: green;
-        }
+      .result {
+        font-weight: bold;
+        margin-top: 10px;
+        text-align: center;
+        color: green;
+      }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
 
-        table, th, td {
-            border: 1px solid #ddd;
-        }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
 
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+      }
 
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
+      th {
+        background-color: #007bff;
+        color: white;
+      }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
 
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
 
-        a:hover {
-            text-decoration: underline;
-        }
+      a:hover {
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>URL Shortener</h1>
+      <h1>URL Shortener</h1>
 
-        <form action="/url" method="POST">
-            <label for="originalUrl">Enter URL:</label>
-            <input type="url" id="originalUrl" name="url" placeholder="https://example.com" required>
-            <button type="submit">Generate</button>
-        </form>
-        <div>
+      <form action="/url" method="POST">
+        <label for="originalUrl">Enter URL:</label>
+        <input
+          type="url"
+          id="originalUrl"
+          name="url"
+          placeholder="https://example.com"
+          required
+        />
+        <button type="submit">Generate</button>
+      </form>
+
+      <div>
         <% if (locals.urls) { %>
-            <table>
-                <thead>
-                    <tr>
-                        <th>S.no</th>
-                        <th>Short ID</th>
-                        <th>Redirect URL</th>
-                        <th>Clicks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% urls.forEach((url, index) => { %>
-                        <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= url.shortId %></td>
-                            <td><a href="<%= url.redirectUrl %>" target="_blank"><%= url.redirectUrl %></a></td>
-                            <td><%= url.visitHistory.length %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+        <table>
+          <thead>
+            <tr>
+              <th>S.no</th>
+              <th>Short ID</th>
+              <th>Redirect URL</th>
+              <th>Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% urls.forEach((url, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= url.shortId %></td>
+              <td>
+                <a href="<%= url.redirectUrl %>" target="_blank"
+                  ><%= url.redirectUrl %></a
+                >
+              </td>
+              <td><%= url.visitHistory.length %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
         <% } %>
-        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
